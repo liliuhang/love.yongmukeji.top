@@ -718,45 +718,62 @@
                         safeSetStorage('love_final_page','success');
 
                         function getAnniversaryDate() {
-                            showCustomPrompt("设置纪念日", "点击确定使用今天，或输入自定义日期", function(anniversaryDate) {
-                                if(anniversaryDate === null) return;
-                                if(anniversaryDate.trim() === "") {
-                                    anniversaryDate = new Date().toISOString().split('T')[0];
-                                }
-                                const dateReg = /^\d{4}-\d{1,2}-\d{1,2}$/;
-                                if(!dateReg.test(anniversaryDate)) {
-                                    showCustomAlert("日期格式不正确，请输入正确的年月日格式，例如2026-07-13", getAnniversaryDate);
-                                    return;
-                                }
-                                safeSetStorage('anniversary_date',anniversaryDate);
+    showCustomPrompt("设置纪念日", "直接按确定使用今天，或输入自定义日期（格式：YYYY-MM-DD）", function(anniversaryDate) {
+        if(anniversaryDate === null) return;
+        
+        let finalDateStr = "";
 
-                                document.getElementById('questionPage').style.display = 'none';
-                                document.getElementById('successPage').style.display = 'block';
-                                switchMusic(bgMusic3);
+        if(anniversaryDate.trim() === "") {
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+            finalDateStr = `${y}-${m}-${d}`;
+        } else {
+            // 验证格式
+            const dateReg = /^\d{4}-\d{1,2}-\d{1,2}$/;
+            if(!dateReg.test(anniversaryDate)) {
+                showCustomAlert("日期格式不正确，请输入正确的年月日格式，例如2026-07-13", getAnniversaryDate);
+                return;
+            }
+            finalDateStr = anniversaryDate;
+        }
 
-                                const date = new Date(anniversaryDate);
-                                const now = new Date();
-                                const diffTime = Math.abs(now - date);
-                                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        safeSetStorage('anniversary_date', finalDateStr);
 
-                                document.getElementById('anniversaryInfo').innerHTML = `
-                                    纪念日时间：${anniversaryDate}<br>
-                                    已经一起走过了 ${diffDays} 天💖
-                                `;
+        document.getElementById('questionPage').style.display = 'none';
+        document.getElementById('successPage').style.display = 'block';
+        switchMusic(bgMusic3);
 
-                                document.getElementById('copyright').innerHTML = `版权所有 © 相爱的你们 2026 - ${currentYear}`;
+        const date = new Date(finalDateStr.replace(/-/g, '/'));
+        
+        const now = new Date();
+        const startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        
+        const diffTime = Math.abs(today - startDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
 
-                                setInterval(() => {
-                                    const nowNew = new Date();
-                                    const newDiffTime = Math.abs(nowNew - date);
-                                    const newDiffDays = Math.ceil(newDiffTime / (1000 * 60 * 60 * 24));
-                                    document.getElementById('anniversaryInfo').innerHTML = `
-                                        纪念日时间：${anniversaryDate}<br>
-                                        已经一起走过了 ${newDiffDays} 天💖
-                                    `;
-                                }, 3600000);
-                            })
-                        }
+        document.getElementById('anniversaryInfo').innerHTML = `
+            纪念日时间：${finalDateStr}<br>
+            已经一起走过了 ${diffDays} 天💖
+        `;
+
+        document.getElementById('copyright').innerHTML = `版权所有 © 相爱的你们 2026 - ${currentYear}`;
+
+        setInterval(() => {
+            const nowNew = new Date();
+            const todayNew = new Date(nowNew.getFullYear(), nowNew.getMonth(), nowNew.getDate());
+            const newDiffTime = Math.abs(todayNew - startDate);
+            const newDiffDays = Math.ceil(newDiffTime / (1000 * 60 * 60 * 24));
+            document.getElementById('anniversaryInfo').innerHTML = `
+                纪念日时间：${finalDateStr}<br>
+                已经一起走过了 ${newDiffDays} 天💖
+            `;
+        }, 3600000);
+    })
+}
+
                         getAnniversaryDate();
                     }
                 })
