@@ -418,7 +418,7 @@
 
     <div class="container" id="questionPage" style="display: none;">
         <div class="question-text">
-            我不允许我所爱的人一个人这件事变成一场没有终点的马拉松，所以我愿意承担被拒绝的风险，也要换一个确切的答案，是继续一起走，还是我该独自上路了？😢
+            我不允许我喜欢一个人这件事变成一场没有终点的马拉松，所以我愿意承担被拒绝的风险，也要换一个确切的答案，是继续一起走，还是我该独自上路了？😢
         </div>
         <div class="choice-container">
             <button class="choice-btn yes-btn" id="yesBtn">我愿意</button>
@@ -636,7 +636,7 @@
                 if(finalPage === 'fail') {
                     document.title = "遗憾的结果😭";
                     document.getElementById('failPage').style.display = 'block';
-                    document.getElementById('copyright').innerHTML = `© 2025-${currentYear} 昆象云科技有限责任公司 版权所有<br>
+                    document.getElementById('copyright').innerHTML = `© 2025-${currentYear} 昆明昆象云科技有限责任公司 版权所有<br>
                     <a href="https://kunxy.top">昆象云科技官网</a> ｜ <a href="https://rule-portal.yongmukeji.top">昆象云科技规章制度访问指引</a> ｜ <a href="https://yongmukeji.top">永慕智创软件工作室官网</a>`;
                     switchMusic(bgMusic2);
                 } else if(finalPage === 'success') {
@@ -694,7 +694,7 @@
                 noBtn.style.fontSize = noBtnFontSize + "em";
                 
                 if(noClickCount >=5) {
-                    showCustomConfirm("是否确定？确定后将显示结果且不可更改！😭", function(confirmResult) {
+                    showCustomConfirm("是否确定拒绝？确定后将显示结果且不可更改！😭", function(confirmResult) {
                         if(confirmResult) {
                             document.title = "遗憾的结果";
                             safeSetStorage('love_page_lock','locked');
@@ -703,7 +703,7 @@
                             document.getElementById('questionPage').style.display = 'none';
                             document.getElementById('failPage').style.display = 'block';
                             switchMusic(bgMusic2);
-                            document.getElementById('copyright').innerHTML = `© 2025-${currentYear} 昆象云科技有限责任公司 版权所有<br>
+                            document.getElementById('copyright').innerHTML = `© 2025-${currentYear} 昆明昆象云科技有限责任公司 版权所有<br>
                             <a href="https://kunxy.top">昆象云科技官网</a> ｜ <a href="https://rule-portal.yongmukeji.top">昆象云科技规章制度访问指引</a> ｜ <a href="https://yongmukeji.top">永慕智创软件工作室官网</a>`;
                         }
                     })
@@ -711,14 +711,14 @@
             });
 
             yesBtn.addEventListener('click', function() {
-                showCustomConfirm("是否确定？确定后将显示结果且不可更改！", function(confirmResult) {
+                showCustomConfirm("是否确定接受？确定后将显示结果且不可更改！", function(confirmResult) {
                     if(confirmResult) {
                         document.title = "🎉我们在一起啦";
                         safeSetStorage('love_page_lock','locked');
                         safeSetStorage('love_final_page','success');
 
                         function getAnniversaryDate() {
-                            showCustomPrompt("设置纪念日", "直接按确定使用今天，或输入自定义日期", function(anniversaryDate) {
+                            showCustomPrompt("设置纪念日", "点击确定使用今天，或输入自定义日期", function(anniversaryDate) {
                                 if(anniversaryDate === null) return;
                                 if(anniversaryDate.trim() === "") {
                                     anniversaryDate = new Date().toISOString().split('T')[0];
@@ -774,7 +774,7 @@
                                 window.location.reload();
                             })
                         } else {
-                            showCustomAlert("密码错误，访问被拒绝");
+                            showCustomAlert("🛑密码错误，访问被拒绝");
                         }
                     })
                 }, 100);
