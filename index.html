@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="x5-page-mode" content="app">
+    <title>Waiting...</title>
+    <link rel="icon" href="https://hive.forms.usercontent.microsoft/Images/9188040d-6c67-4c5b-b112-36a304b66dad/00000000-0000-0000-0003-bffd409131bf/T0RRH45M4BJGVXSCOEE2GS5JAZ/ee97e1d6-f35d-4b36-8b84-3c00cd901cab" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+            overscroll-behavior: none;
+            padding-bottom: 200px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .main-center-text {
+                font-size: 1.6em !important;
+                padding: 0 6%;
+                line-height: 1.7;
+            }
+            .copyright {
+                font-size: 0.7em !important;
+                padding: 12px 15px !important;
+            }
+            .music-btn {
+                width: 44px !important;
+                height: 44px !important;
+                font-size: 1.1em !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-center-text {
+                font-size: 1.3em !important;
+                padding: 0 10%;
+            }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 105, 180, 0.5);
+            border-radius: 50%;
+            animation: float 10s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 0.7; }
+            50% { transform: translateY(50vh) translateX(15px); }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-100vh) translateX(-30px); opacity: 0; }
+        }
+
+        .main-center-text {
+            font-size: 2.4em;
+            color: #8b6f47;
+            font-weight: 600;
+            z-index: 2;
+            text-align: center;
+            line-height: 1.8;
+            animation: fadeIn 2s ease-in, textBreath 6s infinite ease-in-out alternate;
+            margin: 0 20px;
+            overflow-wrap: break-word;
+            max-width: 900px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes textBreath {
+            0% { opacity: 0.9; text-shadow: 0 0 8px rgba(255, 182, 193, 0.2); }
+            100% { opacity: 1; text-shadow: 0 0 15px rgba(255, 182, 193, 0.4); }
+        }
+
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+        }
+
+        .music-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffd1dc 0%, #ffb6c1 100%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.4);
+            transition: all 0.3s ease;
+            font-size: 1.3em;
+            touch-action: manipulation;
+        }
+
+        .music-btn:hover, .music-btn:active {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 182, 193, 0.6);
+        }
+
+        .music-btn.playing {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 4px 15px rgba(255, 182, 193, 0.4); }
+            50% { box-shadow: 0 4px 25px rgba(255, 182, 193, 0.8); }
+        }
+
+        .copyright {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            color: #6b5b4f;
+            font-size: 0.75em;
+            background: rgba(219, 184, 154, 0.3);
+            padding: 14px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 2;
+            opacity: 0;
+            animation: fadeInTip 2s ease-in 1.5s forwards;
+        }
+
+        @keyframes fadeInTip {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        a {
+            color: #8b6f47;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+
+        a:hover {
+            color: #ffb6c1;
+        }
+
+        .modal-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.55);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-box {
+            background: #fff8f5;
+            max-width: 600px;
+            width: 100%;
+            border-radius: 12px;
+            padding: 24px;
+            color: #6b5b4f;
+            line-height: 1.8;
+        }
+        .modal-box h4 {
+            font-size: 1.1em;
+            margin-bottom: 12px;
+            color: #8b6f47;
+        }
+        .modal-box p {
+            font-size: 0.9em;
+            margin: 8px 0;
+        }
+        .modal-btn-wrap {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .modal-confirm {
+            padding: 9px 30px;
+            border: none;
+            border-radius: 6px;
+            background: #ffb6c1;
+            color: #444;
+            font-size: 0.95em;
+            cursor: pointer;
+        }
+        .modal-confirm:active {
+            opacity: 0.85;
+        }
+    </style>
+</head>
+<body>
+    <div class="modal-mask" id="tipModal">
+        <div class="modal-box">
+            <h4>⚠️昆象云科技提示</h4>
+            <p>根据《昆象云科技子域名个人租借使用协议（2026年6月19日签订，2026年7月14日修改）》有关内容，本网页目前归个人用户使用，相关内容由用户上传并由昆象云科技托管、展示，我司已尽力保证内容合法合规性，但相关内容不代表我司立场！</p>
+            <p>【协议有效期自修改后的2026年7月14日起至双方其中一方提出终止协议止，否则本协议每年自动续签并持续保留有效性】</p>
+            <div class="modal-btn-wrap">
+                <button class="modal-confirm" id="closeModalBtn">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="particles" id="particles"></div>
+
+    <div class="main-center-text">
+        一颗信与另一颗心到底有多远的距离，是咫尺？还是天涯？<br>
+        而我会默默地等待，等待你和我一个浪漫的开始...
+    </div>
+
+    <div class="music-control" id="musicControl">
+        <button class="music-btn" id="musicBtn" title="音乐控制">
+            🔈
+        </button>
+    </div>
+
+    <div class="copyright">
+        版权所有©你们  2026-loading...
+    </div>
+
+    <audio id="bgMusic" loop preload="auto" muted defaultMuted playsinline>
+        <source src="wait.mp3" type="audio/mpeg">
+        您的浏览器不支持音频播放。
+    
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const tipModal = document.getElementById('tipModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const bgMusic = document.getElementById('bgMusic');
+            const musicBtn = document.getElementById('musicBtn');
+            let isMusicPlay = false;
+            let autoPlayTriggered = false;
+
+            const syncMusicBtnStatus = () => {
+                if(isMusicPlay) {
+                    musicBtn.textContent = '🎵';
+                    musicBtn.classList.add('playing');
+                } else {
+                    musicBtn.textContent = '🔈';
+                    musicBtn.classList.remove('playing');
+                }
+            }
+
+            const tryAutoPlayAudio = () => {
+                if(autoPlayTriggered) return;
+                autoPlayTriggered = true;
+                bgMusic.play().catch(e=>console.log('静音预加载拦截',e));
+                document.removeEventListener('click', tryAutoPlayAudio);
+                document.removeEventListener('touchstart', tryAutoPlayAudio);
+            }
+
+            const unlockAudio = () => {
+                bgMusic.muted = false;
+                bgMusic.play().then(()=>{
+                    isMusicPlay = true;
+                    syncMusicBtnStatus();
+                }).catch(err=>console.log('播放失败',err));
+            }
+
+            closeModalBtn.addEventListener('click', () => {
+                tipModal.style.display = 'none';
+                unlockAudio();
+            });
+
+            function wechatAudioFix() {
+                if (window.WeixinJSBridge) {
+                    unlockAudio();
+                } else {
+                    document.addEventListener('WeixinJSBridgeReady', unlockAudio, false);
+                }
+            }
+            if(navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1){
+                wechatAudioFix();
+            }
+
+            document.addEventListener('click', tryAutoPlayAudio);
+            document.addEventListener('touchstart', tryAutoPlayAudio, {passive: true});
+            document.addEventListener('mousedown', tryAutoPlayAudio);
+            document.addEventListener('keydown', tryAutoPlayAudio);
+            document.addEventListener('scroll', tryAutoPlayAudio, {passive: true});
+
+            musicBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                if (!bgMusic) return;
+                if (isMusicPlay) {
+                    bgMusic.pause();
+                    isMusicPlay = false;
+                    syncMusicBtnStatus();
+                } else {
+                    unlockAudio();
+                }
+            });
+
+            bgMusic.addEventListener('play', () => {
+                isMusicPlay = true;
+                syncMusicBtnStatus();
+            });
+            bgMusic.addEventListener('pause', () => {
+                isMusicPlay = false;
+                syncMusicBtnStatus();
+            });
+
+            syncMusicBtnStatus();
+
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = window.innerWidth < 768 ? 25 : 35;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = Math.random() * 8 + 4 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 5 + 7) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        })
+    </script>
+</body>
+</html>
